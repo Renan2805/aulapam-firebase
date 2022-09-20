@@ -8,7 +8,7 @@ const Home = () => {
   const [aluno, setAluno] = useState()
 
   const getAluno = async () => {
-    const nameRef = await ref(db, 'Alunos/1')
+    const nameRef = await ref(db, 'Alunos/2')
     await onValue(nameRef, (snapshot) => {
       setAluno(snapshot.val())
       console.log(snapshot.val())
@@ -30,6 +30,10 @@ const Home = () => {
       <View style={styles.info}>
         <Text style={styles.subtitle}>Idade: </Text>
         <Text style={styles.text}>{aluno.Idade}</Text>
+      </View>
+      <View style={styles.info}>
+        <Text style={styles.subtitle}>Turma: </Text>
+        <Text style={styles.text}>{aluno.Turma}</Text>
       </View>
     </View>
 
