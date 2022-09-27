@@ -7,6 +7,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Detalhes from './screens/detalhes';
 import Home from './screens/home';
+import AdicionarAluno from './screens/adicionarAluno';
+import { Platform } from 'react-native';
 
 const App = () => {
 
@@ -23,6 +25,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen options={{title: 'Home'}} name={'home'} component={Home}/>
+        <Stack.Screen options={{title: 'Adicionar'}} name={'adicionar'} component={AdicionarAluno}/>
         <Stack.Screen options={{title: 'Detalhes'}} name={'detalhes'} component={Detalhes}/>
       </Stack.Navigator>
       <StatusBar style="auto" />

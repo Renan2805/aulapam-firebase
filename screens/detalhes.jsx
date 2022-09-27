@@ -19,7 +19,7 @@ const Detalhes = ({navigation, route}) => {
         <Text style={styles.subtitle}>Idade: </Text>
         <Text style={styles.text}>{aluno.Idade}</Text>
       </View>
-      <View style={styles.info}>
+      <View style={[styles.info, {borderWidth: 0}]}>
         <Text style={styles.subtitle}>Turma: </Text>
         <Text style={styles.text}>{aluno.Turma}</Text>
       </View>
@@ -50,7 +50,9 @@ const styles = StyleSheet.create({
   info: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '50%'
+    width: '100%',
+    borderBottomWidth: 1,
+    borderColor: 'black'
   }
 })
 
