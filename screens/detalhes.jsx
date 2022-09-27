@@ -7,6 +7,10 @@ const Detalhes = ({navigation, route}) => {
 
   const [aluno, setAluno] = useState(route.params.aluno)
 
+  useEffect(() => {
+    console.log(aluno)
+  }, [])
+
   if(aluno) return (
     
     <View style={styles.content}>

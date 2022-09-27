@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
-import { set, ref } from 'firebase/database'
+import { set, ref, push } from 'firebase/database'
 import { db } from '../config/firebase'
 
 const AdicionarAluno = () => {
@@ -16,8 +16,9 @@ const AdicionarAluno = () => {
 
     if((nome && idade && turma) != ''){
       setUploading(true)
-      const refAluno = ref(db, `Alunos/8`)
-      await set(refAluno, {
+      const refAluno = ref(db, `Alunos`)
+      const newAlunoRef = push(refAluno)
+      await set(newAlunoRef, {
         Nome: nome,
         Idade: idade,
         Turma: turma

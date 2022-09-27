@@ -8,17 +8,33 @@ import { FontAwesome } from '@expo/vector-icons';
 
 const Home = ({navigation}) => {
 
-  const [alunos, setAlunos] = useState([])
+  const [alunos, setAlunos] = useState({})
   const [isLoading, setIsLoading] = useState(true)
 
   const getAlunos = async () => {
-    const refAlunos = await ref(db, 'Alunos/')
-    await onValue(refAlunos, (snapshot) => {
-      if(snapshot.exists()) {
-        setAlunos(snapshot.val())
-        setIsLoading(false)
+    const refAlunos = ref(db, 'Alunos/')
+    onValue(refAlunos, (snapshot) => {
+      if (snapshot.exists()) {
+        setAlunos(snapshot.val());
+        console.log(snapshot.val());
+        setIsLoading(false);
       }
     })
+  }
+
+  const listarAlunos = () => {
+    const values = Object.values(alunos)
+    return (
+      values.map((aluno) => (
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate('detalhes', {aluno: aluno})}
+        >
+          <Text style={styles.text}>{aluno.Nome}</Text>
+          <FontAwesome name="arrow-right" size={24} color="black" />
+        </TouchableOpacity>
+      ))
+    )
   }
 
   useEffect(() => {
@@ -33,16 +49,10 @@ const Home = ({navigation}) => {
       </View>
       <ScrollView>
         {
-          alunos.map((aluno, index) => (
-            <TouchableOpacity 
-              key={index}
-              style={styles.button}
-              onPress={() => navigation.navigate('detalhes', {aluno: aluno})}
-            >
-              <Text style={styles.text}>{aluno.Nome}</Text>
-              <FontAwesome name="arrow-right" size={24} color="black" />
-            </TouchableOpacity>
-          ))
+          alunos ? 
+            listarAlunos()
+          :
+            <Text style={styles.title}>Sem Alunos</Text>
         }
       </ScrollView>
     </View>
