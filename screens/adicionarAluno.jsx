@@ -5,25 +5,35 @@ import { db } from '../config/firebase'
 
 const AdicionarAluno = () => {
 
-  const [nome, setNome] = useState('')
-  const [idade, setIdade] = useState('')
-  const [turma, setTurma] = useState('')
+  const [nome, setNome] = useState()
+  const [idade, setIdade] = useState()
+  const [turma, setTurma] = useState()
+
+  const [nota1, setNota1] = useState()
+  const [nota2, setNota2] = useState()
+  const [nota3, setNota3] = useState()
 
   const [uploading, setUploading] = useState(false)
   const [message, setMessage] = useState('')
 
   const addAluno = async () => {
 
-    if((nome && idade && turma) != ''){
+    if((nome && idade && turma && nota1 && nota2 && nota3) != undefined){
       setUploading(true)
       const refAluno = ref(db, `Alunos`)
       const newAlunoRef = push(refAluno)
       await set(newAlunoRef, {
         Nome: nome,
         Idade: idade,
-        Turma: turma
+        Turma: turma,
+        Notas: [
+          nota1,
+          nota2,
+          nota3
+        ],
+        Media: (nota1 + nota2 + nota3) / 3
       })
-      .then(() => {
+      .then(() => { 
         setUploading(false)
         setMessage('Adicionado!')
       })
@@ -55,6 +65,10 @@ const AdicionarAluno = () => {
     if(message !== '') return (
       <Text style={[styles.label, {color: color}]}>{message}</Text>
     )
+  }
+
+  const maybeRenderMedia = () => {
+    if((nota1 && nota2 && nota3) != undefined) return (nota1 + nota2 + nota3) / 3
   }
 
   useEffect(() => {
@@ -95,6 +109,39 @@ const AdicionarAluno = () => {
           placeholder={''}
         />
       </View>
+      <View style={styles.labeledInput}>
+        <Text style={styles.label}>Nota 1</Text>
+        <TextInput 
+          style={styles.input}
+          value={nota1}
+          onChangeText={text => setNota1(Number.parseInt(text))}
+          placeholder={''}
+        />
+      </View>
+      <View style={styles.labeledInput}>
+        <Text style={styles.label}>Nota 2</Text>
+        <TextInput 
+          style={styles.input}
+          value={nota2}
+          onChangeText={text => setNota2(Number.parseInt(text))}
+          placeholder={''}
+        />
+      </View>
+      <View style={styles.labeledInput}>
+        <Text style={styles.label}>Nota 3</Text>
+        <TextInput 
+          style={styles.input}
+          value={nota3}
+          onChangeText={text => setNota3(Number.parseInt(text))}
+          placeholder={''}
+        />
+      </View>
+      <Text style={[styles.title, {fontSize: 16}]}>
+        Média: 
+        {
+          maybeRenderMedia()
+        }
+      </Text>
       <TouchableOpacity 
         style={styles.button}
         onPress={() => addAluno()}

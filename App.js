@@ -25,7 +25,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerTitleStyle: {fontFamily: 'Poppins_500Medium'}}}>
         <Stack.Screen options={{title: 'Home'}} name={'home'} component={Home}/>
-        <Stack.Screen options={{title: 'Adicionar'}} name={'adicionar'} component={AdicionarAluno}/>
+        <Stack.Screen options={{title: ''}} name={'adicionar'} component={AdicionarAluno}/>
         <Stack.Screen options={{title: 'Detalhes'}} name={'detalhes'} component={Detalhes}/>
       </Stack.Navigator>
       <StatusBar style="auto" />

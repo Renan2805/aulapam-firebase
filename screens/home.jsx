@@ -25,8 +25,9 @@ const Home = ({navigation}) => {
   const listarAlunos = () => {
     const values = Object.values(alunos)
     return (
-      values.map((aluno) => (
+      values.map((aluno, index) => (
         <TouchableOpacity 
+          key={index}
           style={styles.button}
           onPress={() => navigation.navigate('detalhes', {aluno: aluno})}
         >

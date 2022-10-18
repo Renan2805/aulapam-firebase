@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { ref, onValue } from 'firebase/database'
-import { db } from '../config/firebase'
 
-const Detalhes = ({navigation, route}) => {
+const Detalhes = ({route}) => {
 
   const [aluno, setAluno] = useState(route.params.aluno)
 
@@ -12,7 +10,6 @@ const Detalhes = ({navigation, route}) => {
   }, [])
 
   if(aluno) return (
-    
     <View style={styles.content}>
       <Text style={styles.title}>Aluno</Text>
       <View style={styles.info}>
@@ -27,8 +24,21 @@ const Detalhes = ({navigation, route}) => {
         <Text style={styles.subtitle}>Turma: </Text>
         <Text style={styles.text}>{aluno.Turma}</Text>
       </View>
+      <View style={styles.notas}>
+        {
+          aluno.Notas.map((nota, index) => (
+            <View key={index} style={styles.row}>
+              <Text style={styles.subtitle}>{`Nota${index+1}: `}</Text>
+              <Text style={styles.nota}>{nota}</Text>
+            </View>
+          ))
+        }
+        <View style={[styles.row, {borderWidth: 0}]}>
+          <Text style={styles.subtitle}>Média:</Text>
+          <Text style={styles.nota}>{aluno.Media}</Text>
+        </View>
+      </View>
     </View>
-
   )
 }
 
@@ -57,6 +67,20 @@ const styles = StyleSheet.create({
     width: '100%',
     borderBottomWidth: 1,
     borderColor: 'black'
+  },
+  notas: {
+    width: '100%',
+    padding: 10
+  },
+  nota: {
+    fontFamily: 'Poopins: 400Regular',
+    fontSize: 18,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: 'black'
   }
 })
 
